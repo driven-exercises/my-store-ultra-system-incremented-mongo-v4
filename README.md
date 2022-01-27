@@ -1,15 +1,12 @@
-# my-store-ultra-system-incremented-mongo-v3
+Crie validações nas seguintes rotas no servidor, retornando o status code 422 caso a validação não seja bem sucedida 
 
-Crie as seguintes duas rotas no servidor:
+POST `/products` e PUT `/products/:id`
 
-1. PUT `/products/:id`
-    
-    Atualiza um produto com o id recebido por path params sobrescrevendo todas as propriedades com os valores recebidos por body e retorna status 200 caso obtenha sucesso
-    
-    Caso não encontre o produto, retorna status 404
-    
-2. PUT `/customers/:id`
-    
-    Atualiza um cliente com o id recebido por path params sobrescrevendo todas as propriedades com os valores recebidos por body e retorna status 200 caso obtenha sucesso
-    
-    Caso não encontre o cliente, retorna status 404
+    name é string e obrigatório
+    sku é inteiro e obrigatório
+    price é inteiro e obrigatório
+
+POST `/customers` e PUT `/customers/:id`
+
+    name é string e obrigatório
+    email é string, email e obrigatório
