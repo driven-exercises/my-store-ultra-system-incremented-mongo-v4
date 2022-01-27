@@ -1,20 +1,8 @@
 import express from 'express';
 import { MongoClient, ObjectId } from 'mongodb';
 import dotenv from 'dotenv';
-import joi from 'joi';
 
 dotenv.config();
-
-const productSchema = joi.object({
-  name: joi.string().required(),
-  sku: joi.number().required(),
-  price: joi.number().required()
-});
-
-const customerSchema = joi.object({
-  name: joi.string().required(),
-  email: joi.string().email().required()
-});
 
 const mongoClient = new MongoClient(process.env.MONGO_URI);
 let db;
@@ -55,13 +43,6 @@ app.get('/products/:id', async (req, res) => {
 app.put('/products/:id', async (req, res) => {
   const id = req.params.id;
 
-  productSchema.validate(req.body, { abortEarly: true });
-
-  if (validation.error) {
-    res.status(422);
-    return
-  }
-
   try {
     const product = await db.collection('products').findOne({ _id: new ObjectId(id) })
     if (!product) {
@@ -79,13 +60,6 @@ app.put('/products/:id', async (req, res) => {
 
 app.post('/products', async (req, res) => {
   const product = req.body;
-
-  productSchema.validate(product, { abortEarly: true });
-
-  if (validation.error) {
-    res.status(422);
-    return
-  }
 
   try {
     await db.collection('products').insertOne(product)
@@ -141,13 +115,6 @@ app.post('/customers', async (req, res) => {
   try {
     const customer = req.body;
 
-    customerSchema.validate(customer, { abortEarly: true });
-
-    if (validation.error) {
-      res.status(422);
-      return
-    }
-
     await db.collection('customers').insertOne(customer);
 
     res.sendStatus(201);
@@ -160,13 +127,6 @@ app.post('/customers', async (req, res) => {
 app.put('/customers/:id', async (req, res) => {
   try {
     const id = req.params.id;
-
-    customerSchema.validate(req.body, { abortEarly: true });
-
-    if (validation.error) {
-      res.status(422);
-      return
-    }
 
     const customer = await db.collection('customers').findOne({ _id: new ObjectId(id) });
 
