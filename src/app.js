@@ -40,23 +40,6 @@ app.get('/products/:id', async (req, res) => {
   }
 });
 
-app.put('/products/:id', async (req, res) => {
-  const id = req.params.id;
-
-  try {
-    const product = await db.collection('products').findOne({ _id: new ObjectId(id) })
-    if (!product) {
-      return res.sendStatus(404);
-    }
-
-    await db.collection('products').updateOne({ _id: product._id }, { $set: req.body });
-
-    res.send(product);
-  } catch (error) {
-    console.error(error);
-    res.sendStatus(500);
-  }
-});
 
 app.post('/products', async (req, res) => {
   const product = req.body;
@@ -118,25 +101,6 @@ app.post('/customers', async (req, res) => {
     await db.collection('customers').insertOne(customer);
 
     res.sendStatus(201);
-  } catch (err) {
-    console.log(err);
-    res.sendStatus(500);
-  }
-});
-
-app.put('/customers/:id', async (req, res) => {
-  try {
-    const id = req.params.id;
-
-    const customer = await db.collection('customers').findOne({ _id: new ObjectId(id) });
-
-    if (!customer) {
-      return res.sendStatus(404);
-    }
-
-    await db.collection('customers').updateOne({ _id: customer._id }, { $set: req.body });
-
-    res.sendStatus(200);
   } catch (err) {
     console.log(err);
     res.sendStatus(500);
