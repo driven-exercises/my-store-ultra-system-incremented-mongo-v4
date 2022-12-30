@@ -37,8 +37,8 @@ describe("GET /customers", () => {
     await _setup();
 
     const response = await request.post("/customers", {
-      nome: "Fulano",
-      telefone: "1212341234"
+      name: "Fulano",
+      email: "fulano@gmail.com"
     });
 
     expect(response.status).toEqual(201);
@@ -51,8 +51,8 @@ describe("GET /customers", () => {
 
     expect(response.data).toEqual([{
       _id: expect.any(String),
-      nome: "Fulano",
-      telefone: "1212341234"
+      name: "Fulano",
+      email: "fulano@gmail.com"
     }]);
   });
 
@@ -64,8 +64,8 @@ describe("GET /customers", () => {
 
     expect(response.data).toEqual({
       _id: customerId,
-      nome: "Fulano",
-      telefone: "1212341234"
+      name: "Fulano",
+      email: "fulano@gmail.com"
     });
   });
 });
@@ -93,8 +93,9 @@ describe("GET /products", () => {
     await _setup();
 
     const response = await request.post("/products", {
-      nome: "Televisão",
-      preco: 240000
+      name: "Televisão",
+      sku: 2,
+      price: 240000
     });
 
     expect(response.status).toEqual(201);
@@ -107,8 +108,9 @@ describe("GET /products", () => {
 
     expect(response.data).toEqual([{
       _id: expect.any(String),
-      nome: "Televisão",
-      preco: 240000
+      name: "Televisão",
+      sku: 2,
+      price: 240000
     }]);
   });
 
@@ -120,8 +122,9 @@ describe("GET /products", () => {
 
     expect(response.data).toEqual({
       _id: productId,
-      nome: "Televisão",
-      preco: 240000
+      name: "Televisão",
+      sku: 2,
+      price: 240000
     });
   });
 });
